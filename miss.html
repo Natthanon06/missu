@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Miss You Heart - Perfectly Centered</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #050505;
+            position: relative;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #ui {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ล็อคจุดศูนย์กลางของหัวใจให้อยู่ตรงกลางหน้าจอแบบสัมบูรณ์ */
+        #ui .heart-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* ไม่ต้องใช้ translate เพราะเราจะวาดเส้นทางออกจากจุด 0,0 ตรงนี้เลย */
+            transform: scale(1.1); 
+        }
+
+        /* ปรับขนาดตามหน้าจอ */
+        @media (max-width: 768px) {
+            #ui .heart-container {
+                transform: scale(0.7); 
+            }
+        }
+
+        @media (max-width: 480px) {
+            #ui .heart-container {
+                transform: scale(0.45); 
+            }
+        }
+
+        #ui .miss_word {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ea80b0;
+            font-size: 1.4rem;
+            text-shadow: 0 0 10px rgba(234, 128, 176, 0.7);
+            letter-spacing: 2px;
+            white-space: nowrap;
+            /* อัปเดตพิกัดใหม่ ดึงจุดศูนย์กลางให้อยู่ตรงกลางเป๊ะ */
+            offset-path: path('M 0 -240 C -130 -390 -280 -210 -280 -70 C -280 70 0 240 0 310 C 0 240 280 70 280 -70 C 280 -210 130 -390 0 -240 Z');
+            offset-rotate: 0deg; 
+            animation: move_along_path 10000ms linear infinite;
+            animation-delay: calc(var(--i) * -290ms);
+        }
+
+        #ui .miss_word span {
+            display: block;
+            /* เอียงตัวอักษร 30 องศา และดึงข้อความให้ตรงจุด */
+            transform: translate(-50%, -50%) rotateZ(-30deg);
+        }
+
+        @keyframes move_along_path {
+            0% { offset-distance: 0%; }
+            100% { offset-distance: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="ui">
+        <div class="heart-container">
+            <div class="miss_word" style="--i: 1"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 2"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 3"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 4"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 5"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 6"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 7"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 8"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 9"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 10"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 11"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 12"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 13"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 14"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 15"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 16"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 17"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 18"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 19"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 20"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 21"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 22"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 23"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 24"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 25"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 26"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 27"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 28"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 29"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 30"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 31"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 32"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 33"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 34"><span>I miss you</span></div>
+            <div class="miss_word" style="--i: 35"><span>I miss you</span></div>
+        </div>
+    </div>
+
+    <audio id="bgMusic" autoplay loop controls>
+        <source src="Remastered.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // โค้ดสำหรับสั่งให้เพลงเล่นเมื่อมีการคลิกหรือแตะหน้าจอครั้งแรก
+        document.body.addEventListener('click', function() {
+            var audio = document.getElementById('bgMusic');
+            if (audio.paused) {
+                audio.play();
+            }
+        }, { once: true }); // ให้ทำงานแค่ครั้งเดียว
+        
+        document.body.addEventListener('touchstart', function() {
+            var audio = document.getElementById('bgMusic');
+            if (audio.paused) {
+                audio.play();
+            }
+        }, { once: true }); // รองรับการแตะบนมือถือ
+    </script>
+
+</body>
+</html>
