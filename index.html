@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Miss You Heart</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-color: #050505;
+            position: relative;
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #fff;
+        }
+
+        /* ---------------------------------- */
+        /* 1. ส่วนของหน้าแรก (หน้าปุ่มกด) */
+        /* ---------------------------------- */
+        #start-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            background-color: #050505;
+            transition: opacity 1s ease; /* เอฟเฟกต์เฟดหายไปแบบนุ่มนวล */
+        }
+
+        #start-btn {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            color: #050505;
+            background-color: #ea80b0;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(234, 128, 176, 0.5);
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: pulse 2s infinite; /* ทำให้ปุ่มเต้นตุบๆ เบาๆ */
+        }
+
+        #start-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(234, 128, 176, 0.8);
+            animation: none;
+        }
+
+        /* แอนิเมชันปุ่มเต้น */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* ---------------------------------- */
+        /* 2. ส่วนของหน้าหัวใจ (ซ่อนไว้ก่อน) */
+        /* ---------------------------------- */
+        #heart-screen {
+            width: 100%;
+            height: 100%;
+            opacity: 0; /* ซ่อนให้โปร่งใส */
+            visibility: hidden; /* ป้องกันการคลิกโดน */
+            transition: opacity 2s ease; /* เอฟเฟกต์สว่างขึ้นมา */
+        }
+
+        #ui {
+            width: 100%;
+            height: 100%;
+        }
+
+        #ui .heart-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -65%) scale(1.1); 
+        }
+
+        @media (max-width: 768px) {
+            #ui .heart-container {
+                transform: translate(-50%, -65%) scale(0.7); 
+            }
+        }
+
+        @media (max-width: 480px) {
+            #ui .heart-container {
+                transform: translate(-50%, -65%) scale(0.45); 
+            }
+        }
+
+        #ui .miss_word {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #ea80b0;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(234, 128, 176, 0.7);
+            letter-spacing: 2px;
+            white-space: nowrap;
+            offset-path: path('M 0 -240 C -130 -390 -280 -210 -280 -70 C -280 70 0 240 0 310 C 0 240 280 70 280 -70 C 280 -210 130 -390 0 -240 Z');
+            offset-rotate: 0deg; 
+            animation: move_along_path 10000ms linear infinite;
+            animation-delay: calc(var(--i) * -105ms);
+        }
+
+        #ui .miss_word span {
+            display: block;
+            transform: translate(-50%, -50%) rotateZ(-30deg);
+        }
+
+        @keyframes move_along_path {
+            0% { offset-distance: 0%; }
+            100% { offset-distance: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="start-screen">
+        <button id="start-btn">ลองกดปุ่มดูสิ 👆</button>
+    </div>
+
+    <div id="heart-screen">
+        <div id="ui">
+            <div class="heart-container" id="heart-container">
+            </div>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="Remastered.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 1. สคริปต์สร้างคำว่า "I miss you" 100 คำอัตโนมัติ
+        const heartContainer = document.getElementById('heart-container');
+        const totalWords = 100;
+        
+        for (let i = 1; i <= totalWords; i++) {
+            const wordDiv = document.createElement('div');
+            wordDiv.className = 'miss_word';
+            wordDiv.style.setProperty('--i', i);
+            wordDiv.innerHTML = '<span>I miss you</span>';
+            heartContainer.appendChild(wordDiv);
+        }
+
+        // 2. ระบบทำงานเมื่อคลิกปุ่ม
+        const startBtn = document.getElementById('start-btn');
+        const startScreen = document.getElementById('start-screen');
+        const heartScreen = document.getElementById('heart-screen');
+        const bgMusic = document.getElementById('bgMusic');
+
+        startBtn.addEventListener('click', function() {
+            // เล่นเพลงทันที
+            bgMusic.play();
+
+            // เฟดหน้าจอเริ่มให้มืดลง
+            startScreen.style.opacity = '0';
+            
+            // รอ 1 วินาที (ให้เฟดเสร็จ) แล้วค่อยซ่อนปุ่มถาวร และโชว์หัวใจ
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+                
+                // ค่อยๆ เฟดโชว์หน้าหัวใจขึ้นมา
+                heartScreen.style.visibility = 'visible';
+                heartScreen.style.opacity = '1';
+            }, 1000); 
+        });
+    </script>
+
+</body>
+</html>
